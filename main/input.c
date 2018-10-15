@@ -195,6 +195,18 @@ PAL_KeyboardEventFilter(
          g_InputState.dwKeyPress |= kKeyAuto;
          break;
 
+	  case SDLK_t:
+		  g_InputState.dwKeyPress |= kKeyShowData;
+		  break;
+
+	  case SDLK_g:
+		  g_InputState.dwKeyPress |= kKeyShowEnemy;
+          break;
+
+	  case SDLK_h:
+		  g_InputState.dwKeyPress |= kKeyMagicLev;
+		  break;
+
       case SDLK_d:
          g_InputState.dwKeyPress |= kKeyDefend;
          break;

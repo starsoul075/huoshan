@@ -23,6 +23,9 @@
 
 #define PAL_CLASSIC        1
 
+// flee with cost
+#define ENEMY_FLEE_VALUE
+
 //主角队伍人数可以超过3个人
 #define SHOW_MP_DECREASING							//当mp减少时也显示数值
 //对于最大伤害值加以限制，防止溢出

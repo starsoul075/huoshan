@@ -835,6 +835,13 @@ VOID
 		g_Battle.UI.MenuState = kBattleMenuMain;
 	}
 
+#ifdef SHOW_DATA_IN_BATTLE
+	if (g_InputState.dwKeyPress & kKeyShowData)
+	{
+		gpGlobals->fShowDataInBattle = !gpGlobals->fShowDataInBattle;
+	}
+#endif
+
 #ifdef PAL_CLASSIC
 	if (g_Battle.Phase == kBattlePhasePerformAction)
 	{
@@ -1779,7 +1786,21 @@ Purpose: 在战斗中显示一些数据。
 		{
 			continue;
 		}
-		PAL_DrawNumber(g_Battle.rgEnemy[i].dwActualHealth, 5, PAL_XY(40 * i, 0), kNumColorYellow, kNumAlignRight);
+		PAL_DrawNumber(g_Battle.rgEnemy[i].dwActualHealth, 5, PAL_XY(40 * i, 0), kNumColorYellow, kNumAlignMid);
+
+		// show collect value
+		PAL_DrawNumber(g_Battle.rgEnemy[i].e.wCollectValue, 5, PAL_XY(40 * i, 8), kNumColorYellow, kNumAlignMid);
+		
+		// show control turns
+		SHORT sCtrlTurns = 0;
+		for (j = 0; j < kStatusPuppet; ++j)
+		{
+			sCtrlTurns = sCtrlTurns > g_Battle.rgEnemy[i].rgwStatus[j] ? sCtrlTurns : g_Battle.rgEnemy[i].rgwStatus[j];
+		}
+		if (sCtrlTurns > 0)
+		{
+			PAL_DrawNumber(sCtrlTurns, 5, PAL_XY(40 * i, 16), kNumColorBlue, kNumAlignMid);
+		}
 	}
 
 	//显示我方的对各属性仙术的抗性

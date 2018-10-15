@@ -56,6 +56,9 @@ enum PALKEY
    kKeyFlee        = (1 << 13),
    kKeyStatus      = (1 << 14),
    kKeyForce       = (1 << 15),
+   kKeyShowData    = (1 << 16),
+   kKeyShowEnemy   = (1 << 17),
+   kKeyMagicLev	   = (1 << 18)
 };
 
 VOID

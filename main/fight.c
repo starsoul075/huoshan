@@ -4342,6 +4342,13 @@ PAL_BattleEnemyPerformAction(
 			g_Battle.BattleResult = kBattleResultEnemyFleed;// 此处改为敌人逃跑
 			return;
 		}
+#ifdef ENEMY_FLEE_VALUE
+		else
+		{
+			PAL_BattleDelay(8, BATTLE_LABEL_ESCAPEFAIL, TRUE);
+			return;
+		}
+#endif
 	}
 #endif
 
