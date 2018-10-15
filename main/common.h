@@ -26,6 +26,9 @@
 // flee with cost
 #define ENEMY_FLEE_VALUE
 
+// increase flee rate means
+#define RISE_FLEERATE_MEANS
+
 //主角队伍人数可以超过3个人
 #define SHOW_MP_DECREASING							//当mp减少时也显示数值
 //对于最大伤害值加以限制，防止溢出
