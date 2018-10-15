@@ -842,6 +842,14 @@ VOID
 	}
 #endif
 
+#ifdef SHOW_ENEMY_STATUS
+	if (g_InputState.dwKeyPress & kKeyShowEnemy)
+	{
+		PAL_New_EnemyStatus();
+		goto end;
+	}
+#endif
+
 #ifdef PAL_CLASSIC
 	if (g_Battle.Phase == kBattlePhasePerformAction)
 	{
@@ -1878,7 +1886,6 @@ NUMCOLOR       color
 	}
 }
 
-
 #ifdef SHOW_ENEMY_STATUS
 VOID
 PAL_New_EnemyStatus(
@@ -1888,7 +1895,7 @@ VOID
 	PAL_LARGE BYTE		bufBackground[320 * 200];
 	INT					iCurrent;
 	BATTLEENEMY			be;
-	INT					i, x, y, h;
+	INT					i, x, y, h, j;
 	WORD				w;
 	LPCBITMAPRLE		lBMR;
 	PAL_POS				pos;
@@ -1916,8 +1923,7 @@ VOID
 
 		// 怪物图像
 		lBMR = PAL_SpriteGetFrame(g_Battle.rgEnemy[iCurrent].lpSprite, g_Battle.rgEnemy[iCurrent].wCurrentFrame);
-		pos = PAL_XY(200, 100);
-		pos = PAL_XY(PAL_X(pos) - PAL_RLEGetWidth(lBMR) / 2, PAL_Y(pos) - PAL_RLEGetHeight(lBMR) / 2);
+		pos = PAL_XY((gpScreen->w - PAL_RLEGetWidth(lBMR)) / 2, (gpScreen->h - PAL_RLEGetHeight(lBMR)) / 2 - 20);
 		PAL_RLEBlitToSurface(lBMR, gpScreen, pos);
 
 		// Draw the text labels
@@ -1926,17 +1932,18 @@ VOID
 		y = 6;
 		h = 19;
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_EXP), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
-		PAL_DrawText(PAL_GetWord(STATUS_LABEL_LEVEL), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawText(PAL_GetWord(CASH_LABEL), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_HP), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_ELERESISTANCE), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
+		i++;
 
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_SORCERYRESISTANCE), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_POISONRESISTANCE), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_PHYSICALRESISTANCE), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
-
-		PAL_DrawText(PAL_GetWord(STATUS_LABEL_COLLECTVALUE), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_STEALITEM), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
 		PAL_DrawText(PAL_GetWord(STATUS_LABEL_ATTACKEQUIVITEM), PAL_XY(x, y + (i++) * h), MENUITEM_COLOR, TRUE, FALSE);
 
+		// draw enemy name
 		PAL_DrawText(PAL_GetWord(be.wObjectID), PAL_XY(120, 6), MENUITEM_COLOR_CONFIRMED, TRUE, FALSE);
 
 		// Draw the stats
@@ -1945,17 +1952,25 @@ VOID
 		y = 11;
 		h = 19;
 		PAL_DrawNumber(be.e.wExp, 5, PAL_XY(x + 16, y + (i++) * h), kNumColorYellow, kNumAlignRight);
-		PAL_DrawNumber(be.e.wLevel, 3, PAL_XY(x + 6, y + (i++) * h), kNumColorYellow, kNumAlignRight);
+		PAL_DrawNumber(be.e.wCash, 5, PAL_XY(x + 16, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 		PAL_DrawNumber(be.dwActualHealth, 5, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 		//体力、体力最大值的分隔符“/”
 		PAL_RLEBlitToSurface(PAL_SpriteGetFrame(gpSpriteUI, SPRITENUM_SLASH), gpScreen, PAL_XY(x + 29, y + (i - 1) * h));
 		PAL_DrawNumber(be.dwMaxHealth, 5, PAL_XY(x + 26, y + (i - 1) * h + 5), kNumColorBlue, kNumAlignRight);
 
+		// draw ele resistance
+		for (j = 0; j < NUM_MAGIC_ELEMENTAL; ++j)
+		{
+			PAL_DrawNumber(be.e.wElemResistance[j], 2, PAL_XY(x + j * 10 - 4, y + i * h), kNumColorYellow, kNumAlignRight);
+		}
+		i++;
+		i++;
+
 		PAL_DrawNumber(PAL_New_GetEnemySorceryResistance(iCurrent), 4, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 		PAL_DrawNumber(PAL_New_GetEnemyPoisonResistance(iCurrent), 4, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 		PAL_DrawNumber(PAL_New_GetEnemyPhysicalResistance(iCurrent), 4, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 
-		PAL_DrawNumber(be.e.wCollectValue, 4, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
+		//PAL_DrawNumber(be.e.wCollectValue, 4, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 		
 		PAL_DrawNumber(be.e.nStealItem, 4, PAL_XY(x, y + (i++) * h), kNumColorYellow, kNumAlignRight);
 		PAL_RLEBlitToSurface(PAL_SpriteGetFrame(gpSpriteUI, SPRITENUM_SLASH), gpScreen, PAL_XY(x + 27, y + (i - 1) * h));
@@ -1966,6 +1981,26 @@ VOID
 		PAL_DrawText(PAL_GetWord(wAttackEquivItem), PAL_XY(x + 32, y + (i++) * h - 5), MENUITEM_COLOR_CONFIRMED, TRUE, FALSE);
 
 		PAL_DrawNumber(iCurrent, 1, PAL_XY(300, 180), kNumColorYellow, kNumAlignRight);
+		// draw the next action
+		if (be.e.wDualMove > 0)
+		{
+			PAL_DrawText(PAL_GetWord(STATUS_LABEL_DUALMOVE), PAL_XY(240, 160), MENUITEM_COLOR_CONFIRMED, TRUE, FALSE);
+		}
+		PAL_DrawText(PAL_GetWord(be.e.wMagic), PAL_XY(200, 180), MENUITEM_COLOR_CONFIRMED, TRUE, FALSE);
+
+		// draw the status
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_LEVEL), PAL_XY(rgEquipPos[0][0], rgEquipPos[0][1]), MENUITEM_COLOR, TRUE,  FALSE);
+		PAL_DrawNumber(be.e.wLevel, 4, PAL_XY(rgEquipPos[0][0] + 5, rgEquipPos[0][1] + 20), kNumColorYellow, kNumAlignRight);
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_RESISTANCE), PAL_XY(rgEquipPos[1][0], rgEquipPos[1][1]), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawNumber(PAL_New_GetEnemyDefense(iCurrent), 4, PAL_XY(rgEquipPos[1][0] + 5, rgEquipPos[1][1] + 20), kNumColorYellow, kNumAlignRight);
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_MAGICPOWER), PAL_XY(rgEquipPos[2][0], rgEquipPos[2][1]), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawNumber(PAL_New_GetEnemyMagicStrength(iCurrent), 4, PAL_XY(rgEquipPos[2][0] + 5, rgEquipPos[2][1] + 20), kNumColorYellow, kNumAlignRight);
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_ATTACKPOWER), PAL_XY(rgEquipPos[3][0], rgEquipPos[3][1]), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawNumber(PAL_New_GetEnemyAttackStrength(iCurrent), 4, PAL_XY(rgEquipPos[3][0] + 5, rgEquipPos[3][1] + 20), kNumColorYellow, kNumAlignRight);
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_DEXTERITY), PAL_XY(rgEquipPos[4][0], rgEquipPos[4][1]), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawNumber(PAL_New_GetEnemyDexterity(iCurrent), 4, PAL_XY(rgEquipPos[4][0] + 5, rgEquipPos[4][1] + 20), kNumColorYellow, kNumAlignRight);
+		PAL_DrawText(PAL_GetWord(STATUS_LABEL_FLEERATE), PAL_XY(rgEquipPos[5][0], rgEquipPos[5][1]), MENUITEM_COLOR, TRUE, FALSE);
+		PAL_DrawNumber(PAL_New_GetEnemyFleeRate(iCurrent), 4, PAL_XY(rgEquipPos[5][0] + 5, rgEquipPos[5][1] + 20), kNumColorYellow, kNumAlignRight);
 
 		//
 		// Draw all poisons
