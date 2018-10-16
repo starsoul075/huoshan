@@ -650,6 +650,22 @@ WORD           wEventObjectID
 	INT					iPlayerRole, i, j, x, y;
 	WORD				w, wCurEventObjectID;
 	WORD				wPlayerRole;
+#ifdef RISE_FLEERATE_WEIGHT
+	int					randomFlee = 0;
+	switch (gpGlobals->bFinishGameTime)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+		randomFlee = PAL_GetPlayerFleeRate(gpGlobals->rgParty[g_Battle.wMovingPlayerIndex].wPlayerRole) * RISE_FLEERATE_WEIGHT * 5 / (gpGlobals->bFinishGameTime + 1) / MAX_PARAMETER;
+		break;
+	default:
+		randomFlee = PAL_GetPlayerFleeRate(gpGlobals->rgParty[g_Battle.wMovingPlayerIndex].wPlayerRole) * RISE_FLEERATE_WEIGHT / MAX_PARAMETER;
+		break;
+	}
+#endif // RISE_FLEERATE_WEIGHT
+
 
 	pScript = &(gpGlobals->g.lprgScriptEntry[wScriptEntry]);
 
@@ -1205,6 +1221,9 @@ WORD           wEventObjectID
 			*/
 		{
 			SHORT sDamage = (SHORT)pScript->rgwOperand[1];//可正可负
+#ifdef FINISH_GAME_MORE_ONE_TIME
+			sDamage += gpGlobals->bFinishGameTime * 500;
+#endif
 			if (pScript->rgwOperand[0])
 			{
 				// Inflict damage to all enemies
@@ -1465,6 +1484,9 @@ WORD           wEventObjectID
 				{
 					w = gpGlobals->rgParty[i].wPlayerRole;
 					wPoisonResistance = PAL_GetPlayerPoisonResistance(w);
+#ifdef RISE_FLEERATE_WEIGHT
+					wPoisonResistance -= randomFlee;
+#endif
 					if (fAlwaysSuccess || !PAL_New_GetTrueByPercentage(wPoisonResistance))
 					{
 						PAL_AddPoisonForPlayer(w, pScript->rgwOperand[1]);
@@ -1480,6 +1502,9 @@ WORD           wEventObjectID
 			else
 			{	// Apply to one player
 				wPoisonResistance = PAL_GetPlayerPoisonResistance(wEventObjectID);
+#ifdef RISE_FLEERATE_WEIGHT
+				wPoisonResistance -= randomFlee;
+#endif
 				if (fAlwaysSuccess || !PAL_New_GetTrueByPercentage(wPoisonResistance))
 				{
 					PAL_AddPoisonForPlayer(wEventObjectID, pScript->rgwOperand[1]);
@@ -1632,6 +1657,9 @@ WORD           wEventObjectID
 			}
 #endif
 			iSuccessRate = wBaseSuccessRate - wSorceryResistance;
+#ifdef RISE_FLEERATE_WEIGHT
+			iSuccessRate -= randomFlee;
+#endif // RISE_FLEERATE_WEIGHT
 			if (fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate))
 			{   //仅对不良状态有抗性  //有益状态直接加
 				PAL_SetPlayerStatus(wEventObjectID, wStatusID, wNumRound);
@@ -1680,6 +1708,9 @@ WORD           wEventObjectID
 			}
 #endif
 			iSuccessRate = wBaseSuccessRate - wSorceryResistance;
+#ifdef RISE_FLEERATE_WEIGHT
+			iSuccessRate += randomFlee;
+#endif // RISE_FLEERATE_WEIGHT
 			if (fAlwaysSuccess || !fSorceryIsFull && PAL_New_GetTrueByPercentage(iSuccessRate))
 			{
 				PAL_New_SetEnemyStatus(wEventObjectID, wStatusID, wNumRound);
@@ -3688,7 +3719,7 @@ WORD           wEventObjectID
 	LPSCRIPTENTRY     pScript;
 	LPEVENTOBJECT     pEvtObj = NULL;
 	int               i;
-	int               randomNum;
+
 	extern BOOL       g_fUpdatedInBattle; // HACKHACK
 
 	wNextScriptEntry = wScriptEntry;
@@ -3834,8 +3865,7 @@ WORD           wEventObjectID
 				若参数2被省略，则中断脚本执行，并将06指令所在的脚本地址写入脚本调用处
 				若参数2存在，则跳转参数2指向的脚本地址，继续执行该地址之后的内容
 				*/
-				randomNum = RandomLong(1, 100);
-				if (randomNum > pScript->rgwOperand[0])
+				if (RandomLong(1, 100) > pScript->rgwOperand[0])
 				{
 					wScriptEntry = pScript->rgwOperand[1];
 					continue;

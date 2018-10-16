@@ -23,12 +23,6 @@
 
 #define PAL_CLASSIC        1
 
-// flee with cost
-#define ENEMY_FLEE_VALUE
-
-// increase flee rate means
-#define RISE_FLEERATE_MEANS
-
 //主角队伍人数可以超过3个人
 #define SHOW_MP_DECREASING							//当mp减少时也显示数值
 //对于最大伤害值加以限制，防止溢出
@@ -110,6 +104,14 @@
 // 修复添加有益状态有时会失效的bug
 // 幻影林天南开战就变成血角青龙bug
 // 增加巫术攻击属性，可增加巫术成功率，和巫抗对应。
+
+// flee with cost
+#define ENEMY_FLEE_VALUE
+
+#ifdef FINISH_GAME_MORE_ONE_TIME
+// increase flee rate means
+#define RISE_FLEERATE_WEIGHT				30					
+#endif
 
 #ifdef _WIN32
 //#define PAL_HAS_AVI		

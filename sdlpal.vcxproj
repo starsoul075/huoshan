@@ -104,6 +104,7 @@
     </Bscmake>
     <ClCompile>
       <AdditionalIncludeDirectories>./SDL2/include</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
