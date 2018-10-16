@@ -1417,6 +1417,12 @@ WORD           wEventObjectID
 					{
 						wSorceryResistance = PAL_New_GetEnemySorceryResistance(i);
 						iSuccessRate = wBaseSuccessRate - wSorceryResistance;
+#ifdef RISE_FLEERATE_WEIGHT
+						if (wSorceryResistance != 100)
+						{
+							iSuccessRate += randomFlee;
+						}
+#endif
 						if (fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate))
 						{
 							PAL_New_AddPoisonForEnemy(i, wPoisonID);
@@ -1435,7 +1441,12 @@ WORD           wEventObjectID
 				wEventObjectID = PAL_NEW_CheckAndGetLegalEnemyTarget(wEventObjectID);
 				wSorceryResistance = PAL_New_GetEnemySorceryResistance(wEventObjectID);
 				iSuccessRate = wBaseSuccessRate - wSorceryResistance;
-
+#ifdef RISE_FLEERATE_WEIGHT
+				if (wSorceryResistance != 100)
+				{
+					iSuccessRate += randomFlee;
+				}
+#endif
 				if (fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate))
 				{
 					PAL_New_AddPoisonForEnemy(wEventObjectID, wPoisonID);
@@ -1709,7 +1720,10 @@ WORD           wEventObjectID
 #endif
 			iSuccessRate = wBaseSuccessRate - wSorceryResistance;
 #ifdef RISE_FLEERATE_WEIGHT
-			iSuccessRate += randomFlee;
+			if (wSorceryResistance != 100)
+			{
+				iSuccessRate += randomFlee;
+			}
 #endif // RISE_FLEERATE_WEIGHT
 			if (fAlwaysSuccess || !fSorceryIsFull && PAL_New_GetTrueByPercentage(iSuccessRate))
 			{
