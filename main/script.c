@@ -1496,7 +1496,7 @@ WORD           wEventObjectID
 					w = gpGlobals->rgParty[i].wPlayerRole;
 					wPoisonResistance = PAL_GetPlayerPoisonResistance(w);
 #ifdef RISE_FLEERATE_WEIGHT
-					wPoisonResistance -= randomFlee;
+					wPoisonResistance += randomFlee;
 #endif
 					if (fAlwaysSuccess || !PAL_New_GetTrueByPercentage(wPoisonResistance))
 					{
@@ -1514,7 +1514,7 @@ WORD           wEventObjectID
 			{	// Apply to one player
 				wPoisonResistance = PAL_GetPlayerPoisonResistance(wEventObjectID);
 #ifdef RISE_FLEERATE_WEIGHT
-				wPoisonResistance -= randomFlee;
+				wPoisonResistance += randomFlee;
 #endif
 				if (fAlwaysSuccess || !PAL_New_GetTrueByPercentage(wPoisonResistance))
 				{
