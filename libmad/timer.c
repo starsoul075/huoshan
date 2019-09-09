@@ -384,7 +384,7 @@ void mad_timer_string(mad_timer_t timer,
 
       denom = MAD_TIMER_RESOLUTION / fracunits;
 
-      frac = timer.fraction / denom;
+      frac = (unsigned int)(timer.fraction / denom);
       sub  = scale_rational(timer.fraction % denom, denom, subparts);
     }
     break;

@@ -91,7 +91,7 @@ VIDEO_Init(
 --*/
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_Surface *overlay;
+   //SDL_Surface *overlay;
 #endif
 
    g_wInitialWidth = wScreenWidth;

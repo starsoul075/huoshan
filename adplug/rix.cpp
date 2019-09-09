@@ -91,7 +91,7 @@ bool CrixPlayer::load(const std::string &filename, const CFileProvider &fp)
   {
 	  flag_mkf=1;
 	  f->seek(0);
-	  int offset=f->readInt(4);
+	  int offset=(int)f->readInt(4);
 	  f->seek(offset);
   }
   if(f->readInt(2)!=0x55aa){ fp.close(f);return false; }
@@ -427,8 +427,8 @@ inline void CrixPlayer::switch_ad_bd(uint16_t index)
   if(rhythm == 0 || index < 6) ad_a0b0l_reg(index,a0b0_data3[index],0);
   else
     {
-      bd_modify &= (~bd_reg_data[index]),
-	ad_bd_reg();
+        bd_modify &= (~(bd_reg_data[index]));
+        ad_bd_reg();
     }
 }
 /*--------------------------------------------------------------*/
@@ -437,9 +437,11 @@ inline void CrixPlayer::ins_to_reg(uint16_t index,uint16_t* insb,uint16_t value)
   register uint16_t i;
   for(i=0;i<13;i++) reg_bufs[index].v[i] = insb[i];
   reg_bufs[index].v[13] = value&3;
-  ad_bd_reg(),ad_08_reg(),
-    ad_40_reg(index),ad_C0_reg(index),ad_60_reg(index),
-    ad_80_reg(index),ad_20_reg(index),ad_E0_reg(index);
+  ad_bd_reg();
+  ad_08_reg();
+  ad_40_reg(index);
+  ad_C0_reg(index);ad_60_reg(index);
+  ad_80_reg(index);ad_20_reg(index);ad_E0_reg(index);
 }
 /*--------------------------------------------------------------*/
 inline void CrixPlayer::ad_E0_reg(uint16_t index)
@@ -476,8 +478,8 @@ inline void CrixPlayer::ad_C0_reg(uint16_t index)
 {
   uint16_t data = reg_bufs[index].v[2];
   if(adflag[index] == 1) return;
-  data *= 2,
-    data |= (reg_bufs[index].v[12] < 1?1:0);
+  data *= 2;
+  data |= (reg_bufs[index].v[12] < 1?1:0);
   ad_bop(0xC0+ad_C0_offs[index],data);
 }
 /*--------------------------------------------------------------*/
@@ -485,14 +487,14 @@ inline void CrixPlayer::ad_40_reg(uint16_t index)
 {
   uint32_t res = 0;
   uint16_t data = 0,temp = reg_bufs[index].v[0];
-  data = 0x3F - (0x3F & reg_bufs[index].v[8]),
-    data *= for40reg[index],
-    data *= 2,
-    data += 0x7F,
+    data = 0x3F - (0x3F & reg_bufs[index].v[8]);
+    data *= for40reg[index];
+    data *= 2;
+    data += 0x7F;
     res = data;
-  data = res/0xFE,
-    data -= 0x3F,
-    data = -data,
+    data = res/0xFE;
+    data -= 0x3F;
+    data = -data;
     data |= temp<<6;
   ad_bop(0x40+reg_data[index],data);
 }

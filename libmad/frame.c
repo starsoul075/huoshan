@@ -140,9 +140,9 @@ int decode_header(struct mad_header *header, struct mad_stream *stream)
   }
 
   /* layer */
-  header->layer = 4 - mad_bit_read(&stream->ptr, 2);
+  header->layer = 4 - (int)mad_bit_read(&stream->ptr, 2);
 
-  if (header->layer == 4) {
+  if ((int)header->layer == 4) {
     stream->error = MAD_ERROR_BADLAYER;
     return -1;
   }
@@ -154,7 +154,7 @@ int decode_header(struct mad_header *header, struct mad_stream *stream)
   }
 
   /* bitrate_index */
-  index = mad_bit_read(&stream->ptr, 4);
+  index = (unsigned int)mad_bit_read(&stream->ptr, 4);
 
   if (index == 15) {
     stream->error = MAD_ERROR_BADBITRATE;
@@ -167,7 +167,7 @@ int decode_header(struct mad_header *header, struct mad_stream *stream)
     header->bitrate = bitrate_table[header->layer - 1][index];
 
   /* sampling_frequency */
-  index = mad_bit_read(&stream->ptr, 2);
+  index = (unsigned int)mad_bit_read(&stream->ptr, 2);
 
   if (index == 3) {
     stream->error = MAD_ERROR_BADSAMPLERATE;
@@ -192,10 +192,10 @@ int decode_header(struct mad_header *header, struct mad_stream *stream)
     header->private_bits |= MAD_PRIVATE_HEADER;
 
   /* mode */
-  header->mode = 3 - mad_bit_read(&stream->ptr, 2);
+  header->mode = 3 - (int)mad_bit_read(&stream->ptr, 2);
 
   /* mode_extension */
-  header->mode_extension = mad_bit_read(&stream->ptr, 2);
+  header->mode_extension = (int)mad_bit_read(&stream->ptr, 2);
 
   /* copyright */
   if (mad_bit_read(&stream->ptr, 1))
@@ -206,7 +206,7 @@ int decode_header(struct mad_header *header, struct mad_stream *stream)
     header->flags |= MAD_FLAG_ORIGINAL;
 
   /* emphasis */
-  header->emphasis = mad_bit_read(&stream->ptr, 2);
+  header->emphasis = (int)mad_bit_read(&stream->ptr, 2);
 
 # if defined(OPT_STRICT)
   /*
@@ -261,7 +261,7 @@ int free_bitrate(struct mad_stream *stream, struct mad_header const *header)
 
       ptr = mad_bit_nextbyte(&stream->ptr);
 
-      N = ptr - stream->this_frame;
+      N = (unsigned int)(ptr - stream->this_frame);
 
       if (header->layer == MAD_LAYER_I) {
 	rate = (unsigned long) header->samplerate *
@@ -387,14 +387,14 @@ int mad_header_decode(struct mad_header *header, struct mad_stream *stream)
   pad_slot = (header->flags & MAD_FLAG_PADDING) ? 1 : 0;
 
   if (header->layer == MAD_LAYER_I)
-    N = ((12 * header->bitrate / header->samplerate) + pad_slot) * 4;
+    N = (unsigned int)((12 * header->bitrate / header->samplerate) + pad_slot) * 4;
   else {
     unsigned int slots_per_frame;
 
     slots_per_frame = (header->layer == MAD_LAYER_III &&
 		       (header->flags & MAD_FLAG_LSF_EXT)) ? 72 : 144;
 
-    N = (slots_per_frame * header->bitrate / header->samplerate) + pad_slot;
+    N = (unsigned int)(slots_per_frame * header->bitrate / header->samplerate) + pad_slot;
   }
 
   /* verify there is enough data left in buffer to decode this frame */

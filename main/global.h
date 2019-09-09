@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) 2009, Wei Mingzhi <whistler_wmz@users.sf.net>.
 // All rights reserved.
 //
@@ -658,7 +658,7 @@ INT           iSaveSlot
 
 BOOL PAL_AddItemToInventory(WORD wObjectID, INT iNum);
 
-VOID PAL_New_SortInventory();
+VOID PAL_New_SortInventory(void);
 
 BOOL
 PAL_IncreaseHPMP(

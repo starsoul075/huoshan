@@ -216,7 +216,7 @@ decode_frame(mad_data *mp3_mad) {
     }
   }
 
-  mp3_mad->output_end = out - mp3_mad->output_buffer;
+  mp3_mad->output_end = (int)(out - mp3_mad->output_buffer);
   /*assert(mp3_mad->output_end <= MAD_OUTPUT_BUFFER_SIZE);*/
 }
 

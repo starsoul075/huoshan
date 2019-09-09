@@ -221,8 +221,8 @@ binistream::Float binistream::ieee_single2float(Byte *data) {
    else		// Normalized float values
       return sign * pow(2.0f, exp - 127.0f) * (fract * pow(2.0f, -23.0f) + 1);
 
-   err |= Fatal;
-   return 0.0;
+   /*err |= Fatal;
+   return 0.0;*/
 }
 
 binistream::Float binistream::ieee_double2float(Byte *data) {
@@ -263,8 +263,8 @@ binistream::Float binistream::ieee_double2float(Byte *data) {
    else		// Normalized float values
       return sign * pow(2.0f, exp - 1023.0f) * (fract * pow(2.0f, -52.0f) + 1);
 
-   err |= Fatal;
-   return 0.0;
+   /*err |= Fatal;
+   return 0.0;*/
 }
 
 #if !BINIO_WITH_MATH

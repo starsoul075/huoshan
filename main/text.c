@@ -104,7 +104,7 @@ VOID
 	// See how many words we have
 	//
 	fseek(fpWord, 0, SEEK_END);
-	i = ftell(fpWord);
+	i = (int)ftell(fpWord);
 
 	//
 	// Each word has 10 bytes
@@ -150,7 +150,7 @@ VOID
 	// Read the messages.
 	//
 	fseek(fpMsg, 0, SEEK_END);
-	i = ftell(fpMsg);
+	i = (int)ftell(fpMsg);
 
 	g_TextLib.lpMsgBuf = (LPBYTE)malloc(i);
 	if (g_TextLib.lpMsgBuf == NULL)
@@ -679,7 +679,7 @@ LPCSTR       lpszText
   --*/
 {
 	SDL_Rect        rect;
-	int             x, y, len = strlen(lpszText);
+	int             x, y, len = (int)strlen(lpszText);
 
 	PAL_ClearKeyState();
 	g_TextLib.bIcon = 0;
@@ -1043,7 +1043,7 @@ VOID
 	// See how many words we have
 	//
 	fseek(fpWord, 0, SEEK_END);
-	i = ftell(fpWord);
+	i = (int)ftell(fpWord);
 
 	//
 	// Each word has 10 bytes

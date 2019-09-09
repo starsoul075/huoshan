@@ -74,7 +74,7 @@ mad_fixed_t I_sample(struct mad_bitptr *ptr, unsigned int nb)
 {
   mad_fixed_t sample;
 
-  sample = mad_bit_read(ptr, nb);
+  sample = (mad_fixed_t)mad_bit_read(ptr, nb);
 
   /* invert most significant bit, extend sign, then scale to fixed format */
 
@@ -131,7 +131,7 @@ int mad_layer_I(struct mad_stream *stream, struct mad_frame *frame)
 
   for (sb = 0; sb < bound; ++sb) {
     for (ch = 0; ch < nch; ++ch) {
-      nb = mad_bit_read(&stream->ptr, 4);
+      nb = (unsigned int)mad_bit_read(&stream->ptr, 4);
 
       if (nb == 15) {
 	stream->error = MAD_ERROR_BADBITALLOC;
@@ -143,7 +143,7 @@ int mad_layer_I(struct mad_stream *stream, struct mad_frame *frame)
   }
 
   for (sb = bound; sb < 32; ++sb) {
-    nb = mad_bit_read(&stream->ptr, 4);
+    nb = (unsigned int)mad_bit_read(&stream->ptr, 4);
 
     if (nb == 15) {
       stream->error = MAD_ERROR_BADBITALLOC;
@@ -286,7 +286,7 @@ void II_samples(struct mad_bitptr *ptr,
     unsigned int c, nlevels;
 
     /* degrouping */
-    c = mad_bit_read(ptr, quantclass->bits);
+    c = (unsigned int)mad_bit_read(ptr, quantclass->bits);
     nlevels = quantclass->nlevels;
 
     for (s = 0; s < 3; ++s) {
@@ -298,7 +298,7 @@ void II_samples(struct mad_bitptr *ptr,
     nb = quantclass->bits;
 
     for (s = 0; s < 3; ++s)
-      sample[s] = mad_bit_read(ptr, nb);
+      sample[s] = (unsigned int)mad_bit_read(ptr, nb);
   }
 
   for (s = 0; s < 3; ++s) {

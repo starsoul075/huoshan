@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) 2009, Wei Mingzhi <whistler_wmz@users.sf.net>.
 // All rights reserved.
 //
@@ -1122,7 +1122,7 @@ PAL_New_IsAnItemInArray(
 	)
 {
 	int i = 0;
-	int length = sizeof(items) / sizeof(WORD);
+	int length = sizeof((const WORD *)items) / sizeof(WORD);
 	BOOL result = FALSE;
 
 	for (i = 0; i < length; i++)
