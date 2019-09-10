@@ -97,8 +97,8 @@ void mad_bit_init(struct mad_bitptr *bitptr, unsigned char const *byte)
 unsigned int mad_bit_length(struct mad_bitptr const *begin,
 			    struct mad_bitptr const *end)
 {
-  return begin->left +
-    CHAR_BIT * (end->byte - (begin->byte + 1)) + (CHAR_BIT - end->left);
+  return (unsigned int)(begin->left +
+    CHAR_BIT * (end->byte - (begin->byte + 1)) + (CHAR_BIT - end->left));
 }
 
 /*
@@ -224,7 +224,7 @@ unsigned short mad_bit_crc(struct mad_bitptr bitptr, unsigned int len,
   while (len--) {
     register unsigned int msb;
 
-    msb = mad_bit_read(&bitptr, 1) ^ (crc >> 15);
+    msb = (unsigned int)mad_bit_read(&bitptr, 1) ^ (crc >> 15);
 
     crc <<= 1;
     if (msb & 1)

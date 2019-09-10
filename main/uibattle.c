@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) 2009, Wei Mingzhi <whistler_wmz@users.sf.net>.
 // All rights reserved.
 //
@@ -335,27 +335,24 @@ BOOL       fConfirmed
   Return value:    None.
   --*/
 {
-	INT			i, x, y;
+	INT			i;
 	BYTE		bColor;
 	BYTE		bItemNum;
 
 
 #ifdef PAL_CLASSIC
-	i = 0;
-	x = 16;
-	y = 14;
 	MENUITEM rgMenuItem[] = {
 		// value   label                     enabled   position
-			{i++, BATTLEUI_LABEL_AUTO, TRUE, PAL_XY(x, y + (i * 18))},	//围攻
-			{i++, BATTLEUI_LABEL_INVENTORY, TRUE, PAL_XY(x, y + (i * 18))},			//道具
-			{i++, BATTLEUI_LABEL_DEFEND, TRUE, PAL_XY(x, y + (i * 18))},				//防御
-			{i++, BATTLEUI_LABEL_FLEE, TRUE, PAL_XY(x, y + (i * 18))},				//逃跑
-			{i++, BATTLEUI_LABEL_STATUS, TRUE, PAL_XY(x, y + (i * 18))},			//状态
+			{0,     BATTLEUI_LABEL_AUTO,        TRUE, PAL_XY(16, 32)},	//围攻
+			{1,     BATTLEUI_LABEL_INVENTORY,   TRUE, PAL_XY(16, 50)},			//道具
+			{2,     BATTLEUI_LABEL_DEFEND,      TRUE, PAL_XY(16, 68)},				//防御
+			{3,     BATTLEUI_LABEL_FLEE,        TRUE, PAL_XY(16, 86)},				//逃跑
+			{4,     BATTLEUI_LABEL_STATUS,      TRUE, PAL_XY(16, 104)},			//状态
 #ifdef SHOW_DATA_IN_BATTLE
-			{i++, BATTLEUI_LABEL_DATA, TRUE, PAL_XY(x, y + (i * 18))},				//数据
+			{5,     BATTLEUI_LABEL_DATA,        TRUE, PAL_XY(16, 122)},				//数据
 #endif	
 #ifdef SHOW_ENEMY_STATUS
-			{i++, BATTLEUI_LABEL_ENEMY_STATUS, TRUE, PAL_XY(x, y + (i * 18))},				//敌方状态
+			{6,     BATTLEUI_LABEL_ENEMY_STATUS,TRUE, PAL_XY(16, 140)},				//敌方状态
 #endif
 	};
 #else
@@ -1471,7 +1468,7 @@ VOID
 
 			if (g_Battle.UI.wActionType == kBattleActionCoopMagic)
 			{
-				if (!PAL_BattleUIIsActionValid(kBattleActionCoopMagic))
+				if (!PAL_BattleUIIsActionValid((BATTLEUIACTION)kBattleActionCoopMagic))
 				{
 					g_Battle.UI.state = kBattleUISelectMove;
 					break;

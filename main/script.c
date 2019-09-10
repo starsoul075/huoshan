@@ -1,4 +1,4 @@
-﻿/* -*- mode: c; tab-width: 4; c-basic-offset: 3; c-file-style: "linux" -*- */
+/* -*- mode: c; tab-width: 4; c-basic-offset: 3; c-file-style: "linux" -*- */
 //
 // Copyright (c) 2009, Wei Mingzhi <whistler_wmz@users.sf.net>.
 // All rights reserved.
@@ -1477,7 +1477,7 @@ WORD           wEventObjectID
 			*/
 		{
 			BOOL fAll = (pScript->rgwOperand[0] == 0) ? FALSE : TRUE;
-			WORD wPoisonID = pScript->rgwOperand[1];
+			//WORD wPoisonID = pScript->rgwOperand[1];
 			BOOL fJump = FALSE;
 			BOOL fAlwaysSuccess = FALSE;
 			WORD wPoisonResistance = 0;
@@ -1725,7 +1725,7 @@ WORD           wEventObjectID
 				iSuccessRate += randomFlee;
 			}
 #endif // RISE_FLEERATE_WEIGHT
-			if (fAlwaysSuccess || !fSorceryIsFull && PAL_New_GetTrueByPercentage(iSuccessRate))
+			if (fAlwaysSuccess || (!fSorceryIsFull && PAL_New_GetTrueByPercentage(iSuccessRate)))
 			{
 				PAL_New_SetEnemyStatus(wEventObjectID, wStatusID, wNumRound);
 			}
@@ -4032,8 +4032,8 @@ WORD           wEventObjectID
 				// 新命令：随机跳转到之后的n条后的地址中的一条，
 				// 执行这一条后，从这条命令开始处的n条后继续执行
 				// n为 pScript->rgwOperand[0]的值
-				WORD wNewScriptEntry = wScriptEntry + RandomLong(1, pScript->rgwOperand[0]);
-				WORD wJumpScriptEntry = PAL_InterpretInstruction(wNewScriptEntry, wEventObjectID);
+				//WORD wNewScriptEntry = wScriptEntry + RandomLong(1, pScript->rgwOperand[0]);
+				//WORD wJumpScriptEntry = PAL_InterpretInstruction(wNewScriptEntry, wEventObjectID);
 
 				/*
 				if (wJumpScriptEntry < pScript->rgwOperand[0] + 1 && wJumpScriptEntry > wScriptEntry)

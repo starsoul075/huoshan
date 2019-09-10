@@ -514,8 +514,8 @@ enum mad_error III_sideinfo(struct mad_bitptr *ptr, unsigned int nch,
   *data_bitlen = 0;
   *priv_bitlen = lsf ? ((nch == 1) ? 1 : 2) : ((nch == 1) ? 5 : 3);
 
-  si->main_data_begin = mad_bit_read(ptr, lsf ? 8 : 9);
-  si->private_bits    = mad_bit_read(ptr, *priv_bitlen);
+  si->main_data_begin = (unsigned int)mad_bit_read(ptr, lsf ? 8 : 9);
+  si->private_bits    = (unsigned int)mad_bit_read(ptr, *priv_bitlen);
 
   ngr = 1;
   if (!lsf) {
@@ -688,7 +688,7 @@ unsigned int III_scalefactors_lsf(struct mad_bitptr *ptr,
       max = (1 << slen[part]) - 1;
 
       for (i = 0; i < nsfb[part]; ++i) {
-	is_pos = mad_bit_read(ptr, slen[part]);
+	is_pos = (unsigned int)mad_bit_read(ptr, slen[part]);
 
 	channel->scalefac[n] = is_pos;
 	gr1ch->scalefac[n++] = (is_pos == max);
@@ -2592,7 +2592,7 @@ int mad_layer_III(struct mad_stream *stream, struct mad_frame *frame)
 	mad_bit_skip(&peek, 16);  /* crc_check */
 
       next_md_begin =
-	mad_bit_read(&peek, (header & 0x00080000L) /* ID */ ? 9 : 8);
+	(unsigned int)mad_bit_read(&peek, (header & 0x00080000L) /* ID */ ? 9 : 8);
     }
 
     mad_bit_finish(&peek);
@@ -2600,7 +2600,7 @@ int mad_layer_III(struct mad_stream *stream, struct mad_frame *frame)
 
   /* find main_data of this frame */
 
-  frame_space = stream->next_frame - mad_bit_nextbyte(&stream->ptr);
+  frame_space = (unsigned int)(stream->next_frame - mad_bit_nextbyte(&stream->ptr));
 
   if (next_md_begin > si.main_data_begin + frame_space)
     next_md_begin = 0;

@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) 2009, Wei Mingzhi <whistler_wmz@users.sf.net>.
 // All rights reserved.
 //
@@ -1529,7 +1529,7 @@ WORD			wPercent
 {
 	WORD	wDiff = 0;
 	WORD	wRecoverValue = 0;
-	WORD	wMaxValue = 0;
+	//WORD	wMaxValue = 0;
 	//
 	// Recover automatically after each battle
 	// 每一场战斗后自动恢复

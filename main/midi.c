@@ -24,7 +24,7 @@
 #if !defined (CYGWIN) && !defined (DINGOO) &&  !defined (GEKKO) && !defined (GPH)
 
 static INT iMidCurrent = -1;
-static BOOL fMidLoop = FALSE;
+//static BOOL fMidLoop = FALSE;
 
 #ifdef PAL_HAS_NATIVEMIDI
 static NativeMidiSong *g_pMid = NULL;

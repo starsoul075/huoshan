@@ -155,7 +155,7 @@ BOOL             fFullScreen
 #ifdef _DEBUG
 	SDL_WM_SetCaption("SdlpalEdit (Debug Build)", NULL);
 #else
-	char *strTimeNow = "";
+	//char *strTimeNow = "";
 	SDL_WM_SetCaption(TITLE, NULL);
 #endif
 #endif

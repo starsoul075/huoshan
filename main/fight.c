@@ -1,4 +1,4 @@
-﻿/* -*- mode: c; tab-width: 4; c-basic-offset: 3; c-file-style: "linux" -*- */
+/* -*- mode: c; tab-width: 4; c-basic-offset: 3; c-file-style: "linux" -*- */
 //
 // Copyright (c) 2009, Wei Mingzhi <whistler_wmz@users.sf.net>.
 // All rights reserved.
@@ -1278,7 +1278,7 @@ VOID PAL_BattleStartFrame(VOID)
 						wMoveTimes += min(1, max(gpGlobals->bFinishGameTime - 1, 0));
 					}
 #endif 										
-					if (wMoveTimes % 2 == 1 && (PAL_New_GetAliveEnemyNum() < 2) || RandomLong(0, 9) < 5)
+					if (wMoveTimes % 2 == 1 && (PAL_New_GetAliveEnemyNum() < 2 || RandomLong(0, 9) < 5))
 					{
 						wMoveTimes++;
 					}

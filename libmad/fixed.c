@@ -62,9 +62,13 @@ mad_fixed_t mad_f_div(mad_fixed_t x, mad_fixed_t y)
     return 0;
 
   for (bits = MAD_F_FRACBITS; bits && r; --bits) {
-    q <<= 1, r <<= 1;
-    if (r >= y)
-      r -= y, ++q;
+      q <<= 1;
+      r <<= 1;
+      if (r >= y)
+      {
+          r -= y;
+          ++q;
+      }
   }
 
   /* round */

@@ -193,7 +193,7 @@ RIX_FillBuffer(
          gpRixPlayer->opl->update((short *)(gpRixPlayer->buf), PAL_SAMPLE_RATE / 70);
       }
 
-      l = sizeof(gpRixPlayer->buf) - (gpRixPlayer->pos - gpRixPlayer->buf);
+      l = (int)(sizeof(gpRixPlayer->buf) - (gpRixPlayer->pos - gpRixPlayer->buf));
       if (len < l)
       {
          l = len;
