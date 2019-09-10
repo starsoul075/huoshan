@@ -531,7 +531,7 @@ VOID
   返回值：    无。
   --*/
 {
-	PAL_LARGE BYTE           buf[320 * 200];
+	PAL_LARGE BYTE           *buf = malloc(320 * 200);
 
 	//
 	// Create the surface
@@ -561,6 +561,8 @@ VOID
 	// Draw the picture to the surface.
 	//
 	PAL_FBPBlitToSurface(buf, g_Battle.lpBackground);
+	free(buf);
+	buf = NULL;
 }
 
 VOID 

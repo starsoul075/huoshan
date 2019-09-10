@@ -1,0 +1,13 @@
+totalsize 11200
+enemy count: 160
+persize 70
+chunkcount: 15
+curChunk: 1
+offset: 442
+id: 94(蜈蚣) 335 63 01
+id：92（蝎子）393 89 01
+id:91(老虎)
+五毒巨蠍  五毒巨蛇  五毒蜈蚣
+442 + 70 * 92 = 6882
+442 + 30 + 70 * 94 = 1B8C
+
