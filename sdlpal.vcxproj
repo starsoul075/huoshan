@@ -99,7 +99,7 @@
     <Link>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;imm32.lib;winmm.lib;version.lib;setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ucrtd.lib;sdl2.lib;sdl2main.lib;imm32.lib;winmm.lib;version.lib;setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SDL_HOME)\libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -111,6 +111,7 @@
       <AdditionalIncludeDirectories>$(SDL_HOME)\include</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_DEBUG</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

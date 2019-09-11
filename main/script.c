@@ -2399,8 +2399,9 @@ WORD           wEventObjectID
 			// Jump if enemy's HP is more than the specified percentage
 		case 0x0064:
 		{
+			i = gpGlobals->g.rgObject[g_Battle.rgEnemy[wEventObjectID].wObjectID].enemy.wEnemyID;
 			if ((g_Battle.rgEnemy[wEventObjectID].dwActualHealth) * 100 >
-				(g_Battle.rgEnemy[wEventObjectID].dwMaxHealth) * pScript->rgwOperand[0])
+				(gpGlobals->g.lprgEnemy[i].wHealth) * pScript->rgwOperand[0])
 			{
 				wScriptEntry = pScript->rgwOperand[1] - 1;
 			}

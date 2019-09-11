@@ -119,6 +119,7 @@
 #endif
 
 #ifdef _DEBUG
+#define ENABLE_LOG	// 记录日志
 //#define INVINCIBLE				//无敌模式，受攻击后不减hp不受不良状态影响
 //#define KO_ENEMY_FAST
 #endif // _DEBUG
