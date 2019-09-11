@@ -3,7 +3,6 @@
 #################
 avi/
 mp3/
-*.[Rr][Pp][Gg]
 *.dll
 *.db
 pal/avi/
