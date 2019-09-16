@@ -71,6 +71,9 @@ build/
 [Bb]in/
 [Oo]bj/
 
+#unknown diretory
+[In]dex/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
