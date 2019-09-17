@@ -2401,7 +2401,7 @@ WORD           wEventObjectID
 		{
 			i = gpGlobals->g.rgObject[g_Battle.rgEnemy[wEventObjectID].wObjectID].enemy.wEnemyID;
 			if ((g_Battle.rgEnemy[wEventObjectID].dwActualHealth) * 100 >
-				(gpGlobals->g.lprgEnemy[i].wHealth) * pScript->rgwOperand[0])
+				(g_Battle.rgEnemy[wEventObjectID].dwMaxHealth) * pScript->rgwOperand[0])
 			{
 				wScriptEntry = pScript->rgwOperand[1] - 1;
 			}
