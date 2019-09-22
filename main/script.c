@@ -1423,7 +1423,8 @@ WORD           wEventObjectID
 							iSuccessRate += randomFlee;
 						}
 #endif
-						if (fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate))
+						if ((fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate)) &&
+                            wSorceryResistance != 100)
 						{
 							PAL_New_AddPoisonForEnemy(i, wPoisonID);
 						}
@@ -1447,7 +1448,8 @@ WORD           wEventObjectID
 					iSuccessRate += randomFlee;
 				}
 #endif
-				if (fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate))
+				if ((fAlwaysSuccess || PAL_New_GetTrueByPercentage(iSuccessRate)) &&
+                    wSorceryResistance != 100)
 				{
 					PAL_New_AddPoisonForEnemy(wEventObjectID, wPoisonID);
 				}
